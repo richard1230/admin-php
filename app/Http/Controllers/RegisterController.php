@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class RegisterController extends Controller
 {
-    public function __invoke()
+    //
+    public function __invoke(Request $request)
     {
-        // TODO: Implement __invoke() method.
-        return 110;
+        $user = User::create([
+            'email'=>$request->email,
+            'password'=>$request->password,
+        ]);
+       return $user;
     }
 }

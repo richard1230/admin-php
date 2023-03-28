@@ -14,11 +14,14 @@ class RegisterTest extends TestCase
     public function test_userRegister()
     {
         $response = $this->post('/api/register',[
-            'email'=>'1234567@qq.com',
+            'email'=>'12345676@qq.com',
             'password'=>'admin'
         ]);
 
-        $response->assertStatus(200);
-//        $response->assertSee(11);
+        $response->assertStatus(201);
+//        $response->assertSee(222);
+
     }
+
+
 }
