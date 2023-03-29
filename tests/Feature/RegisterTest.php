@@ -11,11 +11,13 @@ class RegisterTest extends TestCase
     use RefreshDatabase;
     /**
      * A basic feature test example.
+     * @test
      */
     public function test_userRegister()
     {
+        $this->withoutExceptionHandling();
         $response = $this->post('/api/register',[
-            'email'=>'1234567',
+            'email'=>'12345098@qq.com',
             'password'=>'admin'
         ]);
 
