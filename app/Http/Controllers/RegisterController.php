@@ -10,10 +10,12 @@ class RegisterController extends Controller
     //
     public function __invoke(Request $request)
     {
+
         $request->validate([
             'email'=>'required|email|unique:users',
-            'password'=>'required'|'min:5',
+            'password'=>'required|min:6',
         ]);
+
         $user = User::create([
             'email'=>$request->email,
             'password'=>$request->password,
