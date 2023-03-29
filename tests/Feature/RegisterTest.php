@@ -23,9 +23,36 @@ class RegisterTest extends TestCase
         $response = $this->post('/api/register',$this->data);
 
         $response->assertStatus(201);
-//        $response->assertSee(222);
 
     }
+
+    public function test_RegisterEmailValidate()
+    {
+//        $this->withoutExceptionHandling();
+        $response = $this->post('/api/register',['email'=>'aaa']+$this->data);
+        $response->assertSessionHasErrors('email');
+
+    }
+
+    public function test_UniqueEmailValidate()
+    {
+//        $this->withoutExceptionHandling();
+        $response = $this->post('/api/register',$this->data);
+        $response1 = $this->post('/api/register',$this->data);
+        $response1->assertSessionHasErrors('email');
+//        $response1->assertStatus(201);
+    }
+
+    public function test_PasswordValidate()
+    {
+//        $this->withoutExceptionHandling();
+        $response = $this->post('/api/register',[
+            'email'=>'12345098@qq.com',
+            'password'=>'666'
+        ]);
+        $response->assertSessionHasErrors('password');
+    }
+
 
 
 }
