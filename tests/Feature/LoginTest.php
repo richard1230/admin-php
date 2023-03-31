@@ -53,4 +53,17 @@ class LoginTest extends TestCase
 //        $response->assertStatus(200);
 
     }
+
+    public function test_LoginPasswordWrong()
+    {
+        $user=User::factory()->create();
+        $response = $this->post('/api/login',[
+                'email'=>$user->email,
+                'password'=>'admin123'
+            ]
+        );
+
+        $response->assertSessionHasErrors('password');
+
+    }
 }
