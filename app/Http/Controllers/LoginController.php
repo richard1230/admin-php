@@ -17,14 +17,24 @@ class LoginController extends Controller
 //            'password'=>'required|min:6',
 //        ]);
         $user = User::where('email',$request->email)->first();
-//        if (!$user || Hash::check($request->password,$user->password)){
-//
-//        }
+        if (!$user ){
+            throw  ValidationException::withMessages([
+                'email'=>'用户不存在'
+            ]);
+        }
 
         if (!Hash::check($request->password,$user->password)){
             throw  ValidationException::withMessages([
                 'password'=>'密码输入错误'
             ]);
         }
+
+
+        return [
+            'user'=>$user,
+            'token' => $user->createToken('author')->plainTextToken
+
+        ];
+
     }
 }

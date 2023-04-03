@@ -27,7 +27,9 @@ class LoginTest extends TestCase
             ]
         );
 
-        $response->assertStatus(200);
+//        $response->assertStatus(200);
+        $response->assertSee('token');
+
     }
 
     public function test_LoginEmail()
@@ -66,4 +68,19 @@ class LoginTest extends TestCase
         $response->assertSessionHasErrors('password');
 
     }
+
+    public function test_UserNotExist()
+    {
+        $response = $this->post('/api/login',[
+                'email'=>'1@qq.com',
+                'password'=>'admin666'
+            ]
+        );
+
+        $response->assertSessionHasErrors('email');
+
+    }
+
+
+
 }
