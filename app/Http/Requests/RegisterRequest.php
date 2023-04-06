@@ -17,6 +17,7 @@ class RegisterRequest extends FormRequest
         return [
             //
             'account'=>$this->accountRule(),
+            'password'=>['required','min:6','confirmed'],
         ];
     }
 

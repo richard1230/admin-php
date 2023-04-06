@@ -11,8 +11,9 @@ class RegisterTest extends TestCase
     use RefreshDatabase;
     protected $data=[
             'account'=>'12345098@qq.com',
-            'password'=>'admin666'
-        ];
+            'password'=>'admin666',
+        'password_confirmation'=>'admin666'
+    ];
     /**
      * A basic feature test example.
      * @test
@@ -22,7 +23,9 @@ class RegisterTest extends TestCase
         $this->withoutExceptionHandling();
         $response = $this->post('/api/register',$this->data);
 
-        $response->assertStatus(201);
+//        $response->assertStatus(201);
+        $response->assertStatus(200);
+
 
     }
 
@@ -51,6 +54,10 @@ class RegisterTest extends TestCase
 //        $response1->assertStatus(201);
     }
 
+     public function test_PasswordIsError(){
+         $response = $this->post('/api/register',['password'=>'111111']+$this->data);
+         $response->assertSessionHasErrors('password');
+     }
 
 
 
