@@ -16,7 +16,7 @@ class LoginController extends Controller
 //            'email'=>'required|email',
 //            'password'=>'required|min:6',
 //        ]);
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email',$request->account)->first();
         if (!$user ){
             throw  ValidationException::withMessages([
                 'email'=>'用户不存在'

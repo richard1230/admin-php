@@ -22,9 +22,15 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-            'email'=>'required|email',
-            'password'=>'required|min:6',
+            'account'=>$this->accountRule(),
+            'password'=>['required','min:6'],
         ];
+    }
+
+    protected function accountRule(){
+        if (filter_var(request('account'),FILTER_VALIDATE_EMAIL)){
+            return ['required','email'];
+        }
+        return ['required','regex:/^\d{11}$/'];
     }
 }

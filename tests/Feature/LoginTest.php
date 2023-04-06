@@ -12,7 +12,7 @@ class LoginTest extends TestCase
 
     use RefreshDatabase;
     protected $data=[
-        'email'=>'12345098@qq.com',
+        'account'=>'12345098@qq.com',
         'password'=>'admin666'
     ];
     /**
@@ -20,9 +20,10 @@ class LoginTest extends TestCase
      */
     public function test_Login()
     {
+        $this->withoutExceptionHandling();
         $user=User::factory()->create();
         $response = $this->post('/api/login',[
-                'email'=>$user->email,
+                'account'=>$user->email,
                 'password'=>'admin666'
             ]
         );
@@ -32,26 +33,26 @@ class LoginTest extends TestCase
 
     }
 
-    public function test_LoginEmail()
+    public function test_LoginAccount()
     {
 //        $user=User::factory()->create();
         $response = $this->post('/api/login',[
-                'email'=>'asdf',
+                'account'=>'asdf',
                 'password'=>'admin666'
             ]
         );
 
-        $response->assertSessionHasErrors('email');
+        $response->assertSessionHasErrors('account');
     }
 
-    public function test_LoginEmailRequired()
+    public function test_LoginAccountRequired()
     {
         $response = $this->post('/api/login',[
                 'password'=>'admin666'
             ]
         );
 
-        $response->assertSessionHasErrors('email');
+        $response->assertSessionHasErrors('account');
 //        $response->assertStatus(200);
 
     }
@@ -60,7 +61,7 @@ class LoginTest extends TestCase
     {
         $user=User::factory()->create();
         $response = $this->post('/api/login',[
-                'email'=>$user->email,
+                'account'=>$user->email,
                 'password'=>'admin123'
             ]
         );
@@ -72,12 +73,12 @@ class LoginTest extends TestCase
     public function test_UserNotExist()
     {
         $response = $this->post('/api/login',[
-                'email'=>'1@qq.com',
+                'account'=>'1@qq.com',
                 'password'=>'admin666'
             ]
         );
 
-        $response->assertSessionHasErrors('email');
+        $response->assertSessionHasErrors('account');
 
     }
 
