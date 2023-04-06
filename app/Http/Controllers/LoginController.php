@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -11,15 +12,15 @@ use Illuminate\Validation\ValidationException;
 class LoginController extends Controller
 {
     //
-    public  function __invoke(LoginRequest $request){
+    public  function __invoke(LoginRequest $request,UserService $userService){
 //        $request->validate([
 //            'email'=>'required|email',
 //            'password'=>'required|min:6',
 //        ]);
-        $user = User::where('email',$request->account)->first();
+        $user = User::where($userService->loginFieldName(),$request->account)->first();
         if (!$user ){
             throw  ValidationException::withMessages([
-                'email'=>'用户不存在'
+                'account'=>'用户不存在'
             ]);
         }
 

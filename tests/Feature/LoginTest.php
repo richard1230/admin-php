@@ -82,6 +82,19 @@ class LoginTest extends TestCase
 
     }
 
+    public function test_mobileLogin()
+    {
+        $user = User::factory()->create(['mobile'=>'18088888888']);
+        $response = $this->post('/api/login',[
+                'account'=> $user->mobile,
+                'password'=>'admin666'
+            ]
+        );
+
+        $response->assertOk();
+
+    }
+
 
 
 }
