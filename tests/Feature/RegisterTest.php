@@ -10,7 +10,7 @@ class RegisterTest extends TestCase
 {
     use RefreshDatabase;
     protected $data=[
-            'email'=>'12345098@qq.com',
+            'account'=>'12345098@qq.com',
             'password'=>'admin666'
         ];
     /**
@@ -26,32 +26,31 @@ class RegisterTest extends TestCase
 
     }
 
-    public function test_RegisterEmailValidate()
+    public function test_RegisterAccountValidate()
     {
 //        $this->withoutExceptionHandling();
-        $response = $this->post('/api/register',['email'=>'aaa']+$this->data);
-        $response->assertSessionHasErrors('email');
+        $response = $this->post('/api/register',['account'=>'aaa']+$this->data);
+        $response->assertSessionHasErrors('account');
 
     }
 
-    public function test_UniqueEmailValidate()
+
+    public function test_AccountRequiredValidate(){
+        $data = $this->data;
+        unset($data['account']);
+        $response = $this->post('/api/register',$data);
+        $response->assertSessionHasErrors('account');
+    }
+
+    public function test_UniqueAcountValidate()
     {
 //        $this->withoutExceptionHandling();
         $response = $this->post('/api/register',$this->data);
         $response1 = $this->post('/api/register',$this->data);
-        $response1->assertSessionHasErrors('email');
+        $response1->assertSessionHasErrors('account');
 //        $response1->assertStatus(201);
     }
 
-    public function test_PasswordValidate()
-    {
-//        $this->withoutExceptionHandling();
-        $response = $this->post('/api/register',[
-            'email'=>'12345098@qq.com',
-            'password'=>'666'
-        ]);
-        $response->assertSessionHasErrors('password');
-    }
 
 
 
