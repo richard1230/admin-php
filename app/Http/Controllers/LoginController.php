@@ -13,10 +13,7 @@ class LoginController extends Controller
 {
     //
     public  function __invoke(LoginRequest $request,UserService $userService){
-//        $request->validate([
-//            'email'=>'required|email',
-//            'password'=>'required|min:6',
-//        ]);
+
         $user = User::where($userService->loginFieldName(),$request->account)->first();
         if (!$user ){
             throw  ValidationException::withMessages([

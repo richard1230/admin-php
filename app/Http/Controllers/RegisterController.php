@@ -15,10 +15,8 @@ class RegisterController extends Controller
     public function __invoke(RegisterRequest $request,UserService $userService)
     {
 
-//        $accountField= filter_var($request->account,FILTER_VALIDATE_EMAIL)?'email':'mobile';
         $user = User::create([
-//            $accountField=>$request->account,
-        $userService->loginFieldName()=>$request->account,
+            $userService->loginFieldName()=>$request->account,
             'password'=>Hash::make($request->password),
         ]);
         return [
