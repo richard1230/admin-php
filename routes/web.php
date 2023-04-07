@@ -17,6 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('email', function () {
+    return (new \App\Notifications\EmailValidateCodeNotification())
+        ->toMail(User::factory()->make());
+});
+
 
 
 
