@@ -10,12 +10,15 @@ use Illuminate\Notifications\Notification;
 class EmailValidateCodeNotification extends Notification
 {
     use Queueable;
+    protected $code;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(int $code)
+
     {
+        $this->code = $code;
         //
     }
 
@@ -35,9 +38,9 @@ class EmailValidateCodeNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('你的验证码是:')
+                    ->line('你的验证码是:'.$this->code)
                     ->action('请点击我来访问站点', url('/'))
-                    ->line('这是全栈开发!');
+                    ->line('祝你身体健康!');
     }
 
     /**
