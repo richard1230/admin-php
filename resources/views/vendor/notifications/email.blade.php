@@ -7,7 +7,6 @@
 # @lang('Whoops!')
 @else
 # @lang('Hello!')
-    ab你好！！！
 @endif
 @endif
 
